@@ -1,0 +1,1 @@
+I just installed the Skyrim VR Claude Code Modding Toolkit into this folder. Run "bash setup.sh" to set everything up. Install any missing prerequisites (jq, Node.js) for me. After setup, ask me which optional modding tools I'd like (xeditlib, Champollion, Caprica, Spriggit) and install the ones I pick. Explain everything in plain English -- I may be new to command-line tools.

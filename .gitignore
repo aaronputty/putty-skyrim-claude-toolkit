@@ -1,0 +1,13 @@
+# User-specific settings (contains local paths)
+.claude/settings.local.json
+
+# Backups (generated at runtime)
+.claude/backups/
+
+# Node modules
+node_modules/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
