@@ -111,19 +111,18 @@ The real power here is that **Claude can build mods for you**. Not just assist -
 - *"Make a spell that blinds nearby enemies for 5 seconds using a custom magic effect"*
 - *"I want a Lesser Power that equips my best sword and shield automatically when I enter combat"*
 
-**Porting SSE-only mods to VR:**
-- *"This mod uses SKSE64 -- what would need to change to make it work with SKSEVR?"*
+**Porting SSE-only mods to VR (or Oldrim to SSE, SSE to AE, etc):**
+- *"This mod was made for SSE. Examine every VR incompatibility and fix each one"*
 - *"Decompile this script and tell me what breaks in VR and how to fix it"*
 - *"This mod uses PlayIdle() on the player -- that doesn't work in VR. Rewrite it to use timed Papyrus instead"*
 - *"Port this SSE combat script to VR -- check the knowledgebase for anything that behaves differently"*
-- *"This mod was made for SSE. Walk me through every VR incompatibility and how to address each one"*
 
 **Debugging and troubleshooting:**
-- *"I'm getting a CTD when I equip this weapon in VR. What could cause that?"*
+- *"I'm getting a CTD when I equip this weapon in VR. Can you fix it?"*
 - *"NPC dialogue stopped showing up after I installed a mod. Help me debug it."*
 - *"Check my SkyrimVR.ini for settings that might cause problems"*
-- *"Decompile Data/Scripts/MyScript.pex and explain what it does"*
-- *"These two mods both touch the same magic effect -- how do I tell which one wins?"*
+- *"Decompile Data/Scripts/MyScript.pex and explain how it works"*
+- *"These two mods both touch the same magic effect -- which one wins?"*
 
 **Investigating and understanding mods:**
 - *"Inspect all the records in Data/MyMod.esp and explain what this mod actually does under the hood"*
@@ -136,7 +135,7 @@ The real power here is that **Claude can build mods for you**. Not just assist -
 - *"Scan my load order for mods known to break in VR"*
 - *"My mod works in SSE but crashes in VR on startup -- let's figure out why"*
 
-If it involves Skyrim VR, Papyrus, ESPs, INI files, scripts, or mod files of any kind, just ask. Claude has the full context of how the engine works and will figure out the path forward.
+If it involves Skyrim VR, Papyrus, ESPs, INI files, scripts, or mod files of any kind, just ask. Claude has the full context of how the engine works and will figure out the path forward. The hardest part is that it's not perfect and may require some trial and error. And the larger the mod, the more it may require. But it's still *lightyears* faster than trying to do it all yourself.
 
 ---
 
