@@ -2,7 +2,7 @@
 
 Turn your Skyrim install into an AI-assisted modding workshop. Claude Code becomes an automated mod expert who can build you nearly any mod you want! It naturally understands Papyrus scripting, VR-specific quirks, ESP editing, and protects your game files from accidental damage.
 
-Built from hundreds of hours of hands-on Skyrim VR mod development. [Though this env was built with VR in mind, it can be just as powerful in any Skyrim version. Claude Code is the brain.]
+Built from hundreds of hours of hands-on Skyrim VR mod development. **[Though this env was built with VR in mind, it can be just as powerful in any Skyrim version. Claude Code is the brain.]**
 
 > **This isn't just a guide -- it's a complete environment with all the setup prework already done.** You just need to install, and begin building the mod of your dreams! (Or ironing out all the bugs in your existing setup 😛)
 
