@@ -173,7 +173,7 @@ These aren't things you configure -- they're already wired in. Every session, be
 ## FAQ
 
 **Q: Does this work with flat Skyrim SE (non-VR)?**
-A: Yes! The knowledgebase covers both. VR-specific sections only apply to VR. Safety hooks and workflow work for either.
+A: Yes! The knowledgebase covers both. VR-specific sections only apply to VR. Safety hooks and workflow work for either. Just tell Claude Code to adapt your enviornment to your specific Skyrim version. 
 
 **Q: Can Claude break my mods or save files?**
 A: The safety hooks prevent this. Claude can't edit ESP/ESM files directly, must ask permission for any edit, and backs everything up. But always keep your own backups too.
