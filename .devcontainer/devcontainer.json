@@ -20,25 +20,25 @@
     // Note: requires Docker Desktop "file sharing" to include C:/Games/
     "mounts": [
         {
-            "source": "C:/Games/Skyrim25/mods",
+            "source": "{{MO2_INSTANCE_PATH}}/mods",
             "target": "/skyrim/mods",
             "type": "bind",
             "readonly": true
         },
         {
-            "source": "C:/Games/Skyrim25/profiles",
+            "source": "{{MO2_INSTANCE_PATH}}/profiles",
             "target": "/skyrim/profiles",
             "type": "bind",
             "readonly": true
         },
         {
-            "source": "C:/Games/Skyrim25/overwrite",
+            "source": "{{MO2_INSTANCE_PATH}}/overwrite",
             "target": "/skyrim/overwrite",
             "type": "bind",
             "readonly": true
         },
         {
-            "source": "C:/Games/Skyrim25/Game Root/Data",
+            "source": "{{MO2_INSTANCE_PATH}}/Game Root/Data",
             "target": "/skyrim/game-data",
             "type": "bind",
             "readonly": true
@@ -55,7 +55,7 @@
         "SKYRIM_PROFILES_DIR": "/skyrim/profiles",
         "SKYRIM_OVERWRITE_DIR": "/skyrim/overwrite",
         "SKYRIM_GAME_DATA_DIR": "/skyrim/game-data",
-        "MO2_ACTIVE_PROFILE": "Shattered Heresy - B0.1"
+        "MO2_ACTIVE_PROFILE": "{{ACTIVE_PROFILE_NAME}}"
     },
 
     "customizations": {

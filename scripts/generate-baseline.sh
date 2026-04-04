@@ -12,8 +12,8 @@
 
 TOOLKIT_DIR="${TOOLKIT_DIR:-$(pwd)}"
 MO2_BASE="${MO2_BASE:-C:/Games/Skyrim25}"
-GAME_ROOT="${GAME_ROOT:-C:/Games/Skyrim25/Game Root}"
-PROFILE_NAME="${PROFILE_NAME:-Shattered Heresy - B0.1}"
+GAME_ROOT="${GAME_ROOT:-{{MO2_INSTANCE_PATH}}/Game Root}"
+PROFILE_NAME="${PROFILE_NAME:-{{ACTIVE_PROFILE_NAME}}}"
 
 PROFILE_DIR="$MO2_BASE/profiles/$PROFILE_NAME"
 OUTPUT="$TOOLKIT_DIR/.claude/baseline_checksums.txt"

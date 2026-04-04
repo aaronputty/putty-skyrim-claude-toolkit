@@ -54,7 +54,7 @@ reg add "HKLM\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition" /v
 
 > **Why SSE, not VR?** XEditLib uses game mode `gmSSE=4` for both SSE and VR. There is no VR-specific mode. The DLL looks up the game path using the SSE registry key regardless.
 
-> **MO2 stock game setup**: Point the registry key at your stock game root, not the original Steam install. For this setup: `C:\Games\Skyrim25\Game Root\`. XEditLib will then find plugins relative to that path. MO2's virtual filesystem is **not** active when running xelib scripts outside of MO2 — you will only see ESPs that physically exist in `C:\Games\Skyrim25\Game Root\Data\` or that you pass directly to `loadPlugins()` by absolute path.
+> **MO2 stock game setup**: Point the registry key at your stock game root, not the original Steam install. For this setup: `{{MO2_INSTANCE_PATH}}/\Game Root\`. XEditLib will then find plugins relative to that path. MO2's virtual filesystem is **not** active when running xelib scripts outside of MO2 — you will only see ESPs that physically exist in `{{MO2_INSTANCE_PATH}}/\Game Root\Data\` or that you pass directly to `loadPlugins()` by absolute path.
 
 ## Delphi FFI Gotchas
 

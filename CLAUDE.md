@@ -8,29 +8,29 @@ A modded Skyrim VR installation managed by MO2 (Mod Organizer 2) with the Root B
 
 ## Key Paths
 
-- **MO2 base**: `C:/Games/Skyrim25/`
-- **Stock game root**: `C:/Games/Skyrim25/Game Root/`
-- **Active profile**: `Shattered Heresy - B0.1`
-- **User INI configs**: `C:/Games/Skyrim25/profiles/Shattered Heresy - B0.1/` (Skyrim.ini, SkyrimVR.ini, SkyrimPrefs.ini)
-- **Load order**: `C:/Games/Skyrim25/profiles/Shattered Heresy - B0.1/loadorder.txt` and `plugins.txt`
-- **Mod data**: `C:/Games/Skyrim25/mods/<mod-name>/` — MO2 mounts these into a virtual `Data/` at runtime; no flat `Data/` exists on disk
-- **SKSE plugin configs**: `C:/Games/Skyrim25/mods/<mod-name>/SKSE/Plugins/` (per mod) or `C:/Games/Skyrim25/overwrite/SKSE/Plugins/`
-- **Root Builder files**: `C:/Games/Skyrim25/mods/<mod-name>/Root/` — copied into game root at launch, removed on exit
-- **Overwrite folder**: `C:/Games/Skyrim25/overwrite/` — receives files written directly to the game root while MO2 is running
-- **Toolkit**: `C:/Users/miked/Documents/Development/PuttySkyrimMods/Claude Code Setup/`
+- **MO2 base**: `{{MO2_INSTANCE_PATH}}/`
+- **Stock game root**: `{{MO2_INSTANCE_PATH}}/Game Root/`
+- **Active profile**: `{{ACTIVE_PROFILE_NAME}}`
+- **User INI configs**: `{{MO2_INSTANCE_PATH}}/profiles/{{ACTIVE_PROFILE_NAME}}/` (Skyrim.ini, SkyrimVR.ini, SkyrimPrefs.ini)
+- **Load order**: `{{MO2_INSTANCE_PATH}}/profiles/{{ACTIVE_PROFILE_NAME}}/loadorder.txt` and `plugins.txt`
+- **Mod data**: `{{MO2_INSTANCE_PATH}}/mods/<mod-name>/` — MO2 mounts these into a virtual `Data/` at runtime; no flat `Data/` exists on disk
+- **SKSE plugin configs**: `{{MO2_INSTANCE_PATH}}/mods/<mod-name>/SKSE/Plugins/` (per mod) or `{{MO2_INSTANCE_PATH}}/overwrite/SKSE/Plugins/`
+- **Root Builder files**: `{{MO2_INSTANCE_PATH}}/mods/<mod-name>/Root/` — copied into game root at launch, removed on exit
+- **Overwrite folder**: `{{MO2_INSTANCE_PATH}}/overwrite/` — receives files written directly to the game root while MO2 is running
+- **Toolkit**: `{{TOOLKIT_PATH}}`
 
 ## MO2 Virtual Filesystem
 
 MO2 does **not** maintain a real merged `Data/` folder on disk. At launch it mounts a virtual filesystem combining:
-1. `C:/Games/Skyrim25/Game Root/Data/` (stock game + DLC ESMs/BSAs)
-2. Each enabled mod's `C:/Games/Skyrim25/mods/<name>/` folder (higher priority wins on conflict)
-3. `C:/Games/Skyrim25/overwrite/` (highest priority — catches files written during a session)
+1. `{{MO2_INSTANCE_PATH}}/Game Root/Data/` (stock game + DLC ESMs/BSAs)
+2. Each enabled mod's `{{MO2_INSTANCE_PATH}}/mods/<name>/` folder (higher priority wins on conflict)
+3. `{{MO2_INSTANCE_PATH}}/overwrite/` (highest priority — catches files written during a session)
 
 **Implications for tooling:**
-- When inspecting a mod's files, look in `C:/Games/Skyrim25/mods/<mod-name>/`, not `Data/`
-- ESP files for installed mods live in `C:/Games/Skyrim25/mods/<mod-name>/<ModName>.esp`
-- Papyrus source files for a mod live in `C:/Games/Skyrim25/mods/<mod-name>/Scripts/Source/`
-- xelib/XEditLib loads ESPs from the registry game path — ensure the SSE registry key points to `C:/Games/Skyrim25/Game Root/`
+- When inspecting a mod's files, look in `{{MO2_INSTANCE_PATH}}/mods/<mod-name>/`, not `Data/`
+- ESP files for installed mods live in `{{MO2_INSTANCE_PATH}}/mods/<mod-name>/<ModName>.esp`
+- Papyrus source files for a mod live in `{{MO2_INSTANCE_PATH}}/mods/<mod-name>/Scripts/Source/`
+- xelib/XEditLib loads ESPs from the registry game path — ensure the SSE registry key points to `{{MO2_INSTANCE_PATH}}/Game Root/`
 - Root Builder files (ENB, SKSE DLLs, d3dx, etc.) live in `Root/` subfolder of a mod, not directly in the mod's data folder
 
 ## Architecture
@@ -113,10 +113,10 @@ Mounted paths inside the container:
 
 | Host path | Container path | Env var |
 |-----------|---------------|---------|
-| `C:/Games/Skyrim25/mods` | `/skyrim/mods` | `SKYRIM_MODS_DIR` |
-| `C:/Games/Skyrim25/profiles` | `/skyrim/profiles` | `SKYRIM_PROFILES_DIR` |
-| `C:/Games/Skyrim25/overwrite` | `/skyrim/overwrite` | `SKYRIM_OVERWRITE_DIR` |
-| `C:/Games/Skyrim25/Game Root/Data` | `/skyrim/game-data` | `SKYRIM_GAME_DATA_DIR` |
+| `{{MO2_INSTANCE_PATH}}/mods` | `/skyrim/mods` | `SKYRIM_MODS_DIR` |
+| `{{MO2_INSTANCE_PATH}}/profiles` | `/skyrim/profiles` | `SKYRIM_PROFILES_DIR` |
+| `{{MO2_INSTANCE_PATH}}/overwrite` | `/skyrim/overwrite` | `SKYRIM_OVERWRITE_DIR` |
+| `{{MO2_INSTANCE_PATH}}/Game Root/Data` | `/skyrim/game-data` | `SKYRIM_GAME_DATA_DIR` |
 
 Open in VS Code and select "Reopen in Container" to use the containerized environment.
 
@@ -197,7 +197,7 @@ These tools require Windows and must **not** be used for tasks the container can
 |------|---------|-------|
 | **XEditLib.dll** | Load-order-dependent ESP reads and writes via FFI | Load with koffi in Node.js (see below) — must run through MO2 |
 | **Champollion** | Decompile Papyrus `.pex` → `.psc` | `tools/Champollion/Champollion.exe input.pex` |
-| **Caprica** | Compile Papyrus `.psc` → `.pex` | `tools/Caprica/Caprica.exe --game skyrim --import "C:/Games/Skyrim25/Game Root/Data/Scripts/Source" input.psc` — add `--import` for each mod's `Scripts/Source/` folder as needed |
+| **Caprica** | Compile Papyrus `.psc` → `.pex` | `tools/Caprica/Caprica.exe --game skyrim --import "{{MO2_INSTANCE_PATH}}/Game Root/Data/Scripts/Source" input.psc` — add `--import` for each mod's `Scripts/Source/` folder as needed |
 
 Install Windows tools into `tools/` inside the toolkit directory. See the [xeditlib](https://github.com/WingedGuardian/xeditlib) repo for XEditLib setup.
 
@@ -232,7 +232,7 @@ The DLL is Delphi-compiled. These quirks caused hours of debugging:
 
 5. **Game mode enum**: gmFNV=0, gmFO3=1, gmTES4=2, gmTES5=3, **gmSSE=4** (use this for Skyrim VR), gmFO4=5
 
-6. **Registry requirement**: XEditLib reads game path from `HKLM\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition` (the SSE key, not the VR key, because game mode 4 = SSE). For a stock game setup this key must point to `C:\Games\Skyrim25\Game Root\` — not the original Steam path.
+6. **Registry requirement**: XEditLib reads game path from `HKLM\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition` (the SSE key, not the VR key, because game mode 4 = SSE). For a stock game setup this key must point to `{{MO2_INSTANCE_PATH}}/\Game Root\` — not the original Steam path.
 
 7. **xelib.js wrapper**: See [xeditlib on GitHub](https://github.com/WingedGuardian/xeditlib) for the full wrapper with all 163 functions.
 

@@ -35,11 +35,11 @@ read -p "MO2 base folder (e.g. C:/Games/Skyrim25): " MO2_BASE
 MO2_BASE="${MO2_BASE%/}"  # strip trailing slash
 
 # Prompt for stock game root
-read -p "Stock game root (e.g. C:/Games/Skyrim25/Game Root): " GAME_ROOT
+read -p "Stock game root (e.g. {{MO2_INSTANCE_PATH}}/Game Root): " GAME_ROOT
 GAME_ROOT="${GAME_ROOT%/}"
 
 # Prompt for active profile
-read -p "Active MO2 profile name (e.g. Shattered Heresy - B0.1): " ACTIVE_PROFILE
+read -p "Active MO2 profile name (e.g. {{ACTIVE_PROFILE_NAME}}): " ACTIVE_PROFILE
 
 PROFILE_DIR="$MO2_BASE/profiles/$ACTIVE_PROFILE"
 MODS_DIR="$MO2_BASE/mods"
