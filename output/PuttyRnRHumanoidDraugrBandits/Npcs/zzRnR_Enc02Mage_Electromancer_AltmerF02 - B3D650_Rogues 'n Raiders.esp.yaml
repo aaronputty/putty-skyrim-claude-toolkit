@@ -1,0 +1,170 @@
+FormKey: B3D650:Rogues 'n Raiders.esp
+IsCompressed: true
+MajorRecordFlagsRaw: 262144
+EditorID: zzRnR_Enc02Mage_Electromancer_AltmerF02
+SkyrimMajorRecordFlags:
+- Compressed
+ObjectBounds:
+  First: -22, -14, 0
+  Second: 22, 14, 128
+Configuration:
+  Flags:
+  - Female
+  - Respawn
+  - AutoCalcStats
+  - LoopedScript
+  - LoopedAudio
+  MagickaOffset: 75
+  Level:
+    MutagenObjectType: NpcLevel
+    Level: 6
+  SpeedMultiplier: 100
+  DispositionBase: 35
+  TemplateFlags:
+  - ModelAnimation
+  HealthOffset: 6
+Factions:
+- Faction: 026724:Skyrim.esm
+  Fluff: '0x000000'
+DeathItem: B9893B:Rogues 'n Raiders.esp
+Voice: 01F1CD:Skyrim.esm
+Template: 000819:PuttyHumanoidDraugrTemplates.esp
+Race: 00098E:PuttyHumanoidDraugrTemplates.esp
+ActorEffect:
+- B2906D:Rogues 'n Raiders.esp
+- B2906F:Rogues 'n Raiders.esp
+- B2E1D4:Rogues 'n Raiders.esp
+- 034C38:Skyrim.esm
+AttackRace: 00098E:PuttyHumanoidDraugrTemplates.esp
+Perks:
+- Perk: 33F334:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 51B58B:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 847430:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 9E4E9F:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: CEBDF2:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+Items:
+- Item:
+    Item: 4D982A:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 4D982C:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 6A7F4C:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: B9893C:Rogues 'n Raiders.esp
+    Count: 1
+AIData:
+  Aggression: VeryAggressive
+  Confidence: Foolhardy
+  EnergyLevel: 50
+  Assistance: HelpsFriendsAndAllies
+Keywords:
+- 6F8FD6:Rogues 'n Raiders.esp
+- 6F8FD8:Rogues 'n Raiders.esp
+- 6F8FDB:Rogues 'n Raiders.esp
+- 6FE0EE:Rogues 'n Raiders.esp
+- 6FE0F7:Rogues 'n Raiders.esp
+Class: 4D9824:Rogues 'n Raiders.esp
+Name:
+  TargetLanguage: English
+  Value: Apprentice Electromancer
+PlayerSkills:
+  SkillValues:
+  - Key: OneHanded
+    Value: 15
+  - Key: TwoHanded
+    Value: 15
+  - Key: Archery
+    Value: 15
+  - Key: Block
+    Value: 15
+  - Key: Smithing
+    Value: 15
+  - Key: HeavyArmor
+    Value: 15
+  - Key: LightArmor
+    Value: 15
+  - Key: Pickpocket
+    Value: 15
+  - Key: Lockpicking
+    Value: 15
+  - Key: Sneak
+    Value: 18
+  - Key: Alchemy
+    Value: 15
+  - Key: Speech
+    Value: 15
+  - Key: Alteration
+    Value: 28
+  - Key: Conjuration
+    Value: 26
+  - Key: Destruction
+    Value: 32
+  - Key: Illusion
+    Value: 28
+  - Key: Restoration
+    Value: 28
+  - Key: Enchanting
+    Value: 20
+  SkillOffsets:
+  - Key: OneHanded
+    Value: 0
+  - Key: TwoHanded
+    Value: 0
+  - Key: Archery
+    Value: 0
+  - Key: Block
+    Value: 0
+  - Key: Smithing
+    Value: 0
+  - Key: HeavyArmor
+    Value: 0
+  - Key: LightArmor
+    Value: 0
+  - Key: Pickpocket
+    Value: 0
+  - Key: Lockpicking
+    Value: 0
+  - Key: Sneak
+    Value: 0
+  - Key: Alchemy
+    Value: 0
+  - Key: Speech
+    Value: 0
+  - Key: Alteration
+    Value: 0
+  - Key: Conjuration
+    Value: 0
+  - Key: Destruction
+    Value: 0
+  - Key: Illusion
+    Value: 0
+  - Key: Restoration
+    Value: 0
+  - Key: Enchanting
+    Value: 0
+  Health: 98
+  Magicka: 158
+  Stamina: 50
+  GearedUpWeapons: 1
+CombatStyle: 4D9825:Rogues 'n Raiders.esp
+NAM5: 255
+Height: 1
+Weight: 80
+SoundLevel: Normal
+DefaultOutfit: 4D982E:Rogues 'n Raiders.esp
+DefaultPackageList: 021E81:Skyrim.esm
+MajorFlags:
+- '0x40000'

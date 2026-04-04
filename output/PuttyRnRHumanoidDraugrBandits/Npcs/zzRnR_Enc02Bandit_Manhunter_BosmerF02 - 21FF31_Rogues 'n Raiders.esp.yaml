@@ -1,0 +1,178 @@
+FormKey: 21FF31:Rogues 'n Raiders.esp
+IsCompressed: true
+MajorRecordFlagsRaw: 786432
+EditorID: zzRnR_Enc02Bandit_Manhunter_BosmerF02
+SkyrimMajorRecordFlags:
+- Compressed
+- CantWait
+ObjectBounds:
+  First: -22, -14, 0
+  Second: 22, 14, 128
+Configuration:
+  Flags:
+  - Female
+  - Respawn
+  - AutoCalcStats
+  - LoopedScript
+  - LoopedAudio
+  StaminaOffset: 20
+  Level:
+    MutagenObjectType: NpcLevel
+    Level: 6
+  SpeedMultiplier: 110
+  DispositionBase: 35
+  TemplateFlags:
+  - ModelAnimation
+  HealthOffset: 5
+Factions:
+- Faction: 01BCC0:Skyrim.esm
+  Fluff: '0x000000'
+DeathItem: 0C3C9B:Skyrim.esm
+Voice: 01F1CD:Skyrim.esm
+Template: 00082D:PuttyHumanoidDraugrTemplates.esp
+Race: 00098E:PuttyHumanoidDraugrTemplates.esp
+AttackRace: 00098E:PuttyHumanoidDraugrTemplates.esp
+Perks:
+- Perk: 084277:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 10E3B6:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 214551:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 2EFA68:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 78BE3E:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 78BE45:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 9354CE:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 9E4E9F:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+Items:
+- Item:
+    Item: 15F57A:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 15F57C:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 28DEB3:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 5CC958:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 9354CF:Rogues 'n Raiders.esp
+    Count: 1
+AIData:
+  Aggression: VeryAggressive
+  Confidence: Foolhardy
+  EnergyLevel: 50
+  Assistance: HelpsFriendsAndAllies
+Keywords:
+- 6F8FD6:Rogues 'n Raiders.esp
+- 6F8FD7:Rogues 'n Raiders.esp
+- 6F8FD8:Rogues 'n Raiders.esp
+- 6FE0E4:Rogues 'n Raiders.esp
+Class: 5CC955:Rogues 'n Raiders.esp
+Name:
+  TargetLanguage: English
+  Value: Dogged Bandit Manhunter
+PlayerSkills:
+  SkillValues:
+  - Key: OneHanded
+    Value: 20
+  - Key: TwoHanded
+    Value: 18
+  - Key: Archery
+    Value: 37
+  - Key: Block
+    Value: 21
+  - Key: Smithing
+    Value: 15
+  - Key: HeavyArmor
+    Value: 15
+  - Key: LightArmor
+    Value: 26
+  - Key: Pickpocket
+    Value: 20
+  - Key: Lockpicking
+    Value: 20
+  - Key: Sneak
+    Value: 28
+  - Key: Alchemy
+    Value: 20
+  - Key: Speech
+    Value: 15
+  - Key: Alteration
+    Value: 15
+  - Key: Conjuration
+    Value: 15
+  - Key: Destruction
+    Value: 15
+  - Key: Illusion
+    Value: 15
+  - Key: Restoration
+    Value: 15
+  - Key: Enchanting
+    Value: 15
+  SkillOffsets:
+  - Key: OneHanded
+    Value: 0
+  - Key: TwoHanded
+    Value: 0
+  - Key: Archery
+    Value: 0
+  - Key: Block
+    Value: 0
+  - Key: Smithing
+    Value: 0
+  - Key: HeavyArmor
+    Value: 0
+  - Key: LightArmor
+    Value: 0
+  - Key: Pickpocket
+    Value: 0
+  - Key: Lockpicking
+    Value: 0
+  - Key: Sneak
+    Value: 0
+  - Key: Alchemy
+    Value: 0
+  - Key: Speech
+    Value: 0
+  - Key: Alteration
+    Value: 0
+  - Key: Conjuration
+    Value: 0
+  - Key: Destruction
+    Value: 0
+  - Key: Illusion
+    Value: 0
+  - Key: Restoration
+    Value: 0
+  - Key: Enchanting
+    Value: 0
+  Health: 100
+  Magicka: 50
+  Stamina: 100
+  GearedUpWeapons: 1
+CombatStyle: 10E3BB:Rogues 'n Raiders.esp
+NAM5: 255
+Height: 1
+Weight: 50
+SoundLevel: Normal
+DefaultOutfit: 5CC957:Rogues 'n Raiders.esp
+DefaultPackageList: 021E81:Skyrim.esm
+MajorFlags:
+- '0x40000'
+- '0x80000'

@@ -1,0 +1,6 @@
+# Windows-only dependencies — do not install in the devcontainer
+# Install with: pip install -r requirements-windows.txt
+# Must be run through MO2's executable list (see CLAUDE.md)
+
+pywin32==306
+# xEditLib Python wrapper — add package name when confirmed

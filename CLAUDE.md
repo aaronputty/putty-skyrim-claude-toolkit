@@ -4,54 +4,207 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A modded Skyrim installation managed by Vortex. (Adapt paths and version-specific notes to your Skyrim version: SE, AE, VR, or LE.)
+A modded Skyrim VR installation managed by MO2 (Mod Organizer 2) with the Root Builder plugin and a stock game folder setup. The toolkit lives in a separate folder from the game; MO2 presents a virtual `Data/` filesystem at runtime by merging individual mod folders.
 
 ## Key Paths
 
-- **Game root**: `{{GAME_ROOT}}/`
-- **User INI configs**: `{{DOCUMENTS_DIR}}/My Games/Skyrim VR/` (Skyrim.ini, SkyrimVR.ini, SkyrimPrefs.ini)
-- **Load order**: `C:/Users/{{USERNAME}}/AppData/Local/Skyrim VR/loadorder.txt` and `plugins.txt`
-- **SKSE plugins**: `Data/SKSE/Plugins/`
-- **Mod data**: `Data/` (ESPs, BSAs, meshes, textures, scripts)
+- **MO2 base**: `C:/Games/Skyrim25/`
+- **Stock game root**: `C:/Games/Skyrim25/Game Root/`
+- **Active profile**: `Shattered Heresy - B0.1`
+- **User INI configs**: `C:/Games/Skyrim25/profiles/Shattered Heresy - B0.1/` (Skyrim.ini, SkyrimVR.ini, SkyrimPrefs.ini)
+- **Load order**: `C:/Games/Skyrim25/profiles/Shattered Heresy - B0.1/loadorder.txt` and `plugins.txt`
+- **Mod data**: `C:/Games/Skyrim25/mods/<mod-name>/` — MO2 mounts these into a virtual `Data/` at runtime; no flat `Data/` exists on disk
+- **SKSE plugin configs**: `C:/Games/Skyrim25/mods/<mod-name>/SKSE/Plugins/` (per mod) or `C:/Games/Skyrim25/overwrite/SKSE/Plugins/`
+- **Root Builder files**: `C:/Games/Skyrim25/mods/<mod-name>/Root/` — copied into game root at launch, removed on exit
+- **Overwrite folder**: `C:/Games/Skyrim25/overwrite/` — receives files written directly to the game root while MO2 is running
+- **Toolkit**: `C:/Users/miked/Documents/Development/PuttySkyrimMods/Claude Code Setup/`
 
-## Installed Modding Tools
+## MO2 Virtual Filesystem
 
-All under `tools/`:
+MO2 does **not** maintain a real merged `Data/` folder on disk. At launch it mounts a virtual filesystem combining:
+1. `C:/Games/Skyrim25/Game Root/Data/` (stock game + DLC ESMs/BSAs)
+2. Each enabled mod's `C:/Games/Skyrim25/mods/<name>/` folder (higher priority wins on conflict)
+3. `C:/Games/Skyrim25/overwrite/` (highest priority — catches files written during a session)
+
+**Implications for tooling:**
+- When inspecting a mod's files, look in `C:/Games/Skyrim25/mods/<mod-name>/`, not `Data/`
+- ESP files for installed mods live in `C:/Games/Skyrim25/mods/<mod-name>/<ModName>.esp`
+- Papyrus source files for a mod live in `C:/Games/Skyrim25/mods/<mod-name>/Scripts/Source/`
+- xelib/XEditLib loads ESPs from the registry game path — ensure the SSE registry key points to `C:/Games/Skyrim25/Game Root/`
+- Root Builder files (ENB, SKSE DLLs, d3dx, etc.) live in `Root/` subfolder of a mod, not directly in the mod's data folder
+
+## Architecture
+
+### Container First
+
+Default to the container for any task. Only cross to Windows/MO2 when the task genuinely requires it.
+
+| Task | Where | Tool |
+|------|-------|------|
+| Validate plugin metadata (masters, FormIDs, overlap) | Container | `esplugin` (Python) |
+| Inspect ESP records | Container | `spriggit serialize` → YAML |
+| Diff two ESPs | Container | `spriggit serialize` both → `diff` |
+| Author new ESP records | Container | Spriggit YAML → `spriggit deserialize` |
+| Generate FOMOD XML | Container | Node.js (`fast-xml-parser`) |
+| Validate JSON schemas | Container | Node.js (`ajv`, `zod`) |
+| Unit test mod logic | Container | `pytest` |
+| Load-order-dependent ESP edits | Windows (MO2) | xelib |
+| Decompile Papyrus `.pex` → `.psc` | Windows | Champollion |
+| Compile Papyrus `.psc` → `.pex` | Windows | Caprica |
+
+### Why xelib is Windows-only
+
+`XEditLib.dll` is a Delphi-compiled Windows DLL. It cannot run in a Linux container and requires the MO2 virtual filesystem to see the full load order. It must be launched through MO2's executable list.
+
+Anything achievable with Spriggit or esplugin should use those instead. xelib is reserved for operations that need the fully resolved load order or that Spriggit cannot express.
+
+### Output contract
+
+The container side produces artifacts consumed by the Windows side:
+- `conversion_plan.json` — record operations for `esp_runner/` to execute via xelib
+- Spriggit YAML — ESP source files that `spriggit deserialize` compiles to binary
+- FOMOD `ModuleConfig.xml` — installer definition
+
+Nothing in `esp_runner/` should contain logic. The container makes all decisions.
+
+---
+
+## Development Environment
+
+### Python — pyenv-win + venv
+
+Python version management uses `pyenv-win`. The project Python interpreter is pinned
+in `.python-version` and is completely separate from any system Python on the host.
+
+```powershell
+# First time setup on a new Windows machine
+pyenv install 3.11.9
+pyenv local 3.11.9
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+For Windows-side execution only:
+```powershell
+pip install -r requirements-windows.txt
+```
+
+### Node.js — fnm
+
+Node version management uses `fnm`. The project Node version is pinned in
+`.node-version`. fnm auto-switches when you `cd` into the project folder if shell
+integration is configured.
+
+```powershell
+# First time setup
+fnm install 24.14.1
+fnm use 24.14.1
+npm install
+```
+
+### Dev Container
+
+The `.devcontainer/devcontainer.json` sets up Python 3.11 + Node 20 + .NET 9. It
+bind-mounts the MO2 mods, profiles, overwrite, and game Data folders **read-only** so
+container scripts can read real mod files without MO2 needing to be active.
+
+Mounted paths inside the container:
+
+| Host path | Container path | Env var |
+|-----------|---------------|---------|
+| `C:/Games/Skyrim25/mods` | `/skyrim/mods` | `SKYRIM_MODS_DIR` |
+| `C:/Games/Skyrim25/profiles` | `/skyrim/profiles` | `SKYRIM_PROFILES_DIR` |
+| `C:/Games/Skyrim25/overwrite` | `/skyrim/overwrite` | `SKYRIM_OVERWRITE_DIR` |
+| `C:/Games/Skyrim25/Game Root/Data` | `/skyrim/game-data` | `SKYRIM_GAME_DATA_DIR` |
+
+Open in VS Code and select "Reopen in Container" to use the containerized environment.
+
+---
+
+## MO2 / xEditLib Integration
+
+### Critical: Always Launch Through MO2
+
+Python scripts that call `XEditLib.dll` **must** be launched through MO2's executable
+list. If run outside MO2, xEditLib cannot see the virtualized mod files or the full
+load order.
+
+**MO2 executable entry:**
+- Binary: `C:\<project-path>\.venv\Scripts\python.exe`
+- Arguments: `esp_runner\run_conversion.py`
+- Start in: `C:\<project-path>`
+
+This ensures the correct isolated Python interpreter is used and the MO2 VFS is active.
+
+### Rootbuilder
+
+Rootbuilder manages root-level game files outside the Data folder. It is unrelated to
+the Python/Node tooling and does not need to be considered during script execution.
+
+---
+
+---
+
+## Dependencies
+
+### requirements.txt (container + dev)
+
+```
+esplugin==4.0.0
+pydantic==2.6.0
+cattrs==23.2.0
+PyYAML==6.0.1
+pytest==8.0.0
+pytest-cov==4.1.0
+ruff==0.3.0
+mypy==1.9.0
+```
+
+### requirements-windows.txt (Windows execution only)
+
+```
+pywin32==306
+# xEditLib Python wrapper — add when confirmed
+```
+
+### package.json dependencies
+
+```
+fast-xml-parser  — FOMOD ModuleConfig.xml generation and validation
+ajv              — JSON schema validation for conversion_plan.json
+zod              — runtime schema validation
+```
+---
+
+## Modding Tools
+
+### Container side
 
 | Tool | Purpose | Usage |
 |------|---------|-------|
+| **esplugin** (Python) | Validate plugin metadata: masters, FormID ranges, overlap, record count | `import esplugin` — see `examples/inspect-esp.py` |
+| **Spriggit** (.NET) | ESP ↔ YAML/JSON round-trip — read, diff, and author records as text | `dotnet tool run spriggit serialize --InputPath <esp> --OutputPath <dir> --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim` |
+| **Node.js** | FOMOD generation, JSON schema validation | `fast-xml-parser`, `ajv`, `zod` — see `examples/` |
+
+Spriggit is installed as a .NET local tool via `dotnet tool restore` — no manual installation needed.
+
+### Windows only
+
+These tools require Windows and must **not** be used for tasks the container can handle.
+
+| Tool | Purpose | Usage |
+|------|---------|-------|
+| **XEditLib.dll** | Load-order-dependent ESP reads and writes via FFI | Load with koffi in Node.js (see below) — must run through MO2 |
 | **Champollion** | Decompile Papyrus `.pex` → `.psc` | `tools/Champollion/Champollion.exe input.pex` |
-| **Caprica** | Compile Papyrus `.psc` → `.pex` | `tools/Caprica/Caprica.exe --game skyrim --import "Data/Scripts/Source" input.psc` |
-| **XEditLib.dll** | Programmatic ESP/ESM reading via FFI | Load with koffi in Node.js (see below) |
-| **Spriggit** | ESP ↔ YAML/JSON conversion (.NET) | `dotnet tool run spriggit serialize ...` |
-| **AutoMod CLI** | NIF meshes, BSA archives, audio, MCM, ESP one-liners | `bash tools/automod-cli.sh <module> <command> --json` |
+| **Caprica** | Compile Papyrus `.psc` → `.pex` | `tools/Caprica/Caprica.exe --game skyrim --import "C:/Games/Skyrim25/Game Root/Data/Scripts/Source" input.psc` — add `--import` for each mod's `Scripts/Source/` folder as needed |
 
-> **Note**: Install tools you need into a `tools/` folder in your game directory. See the [xeditlib](https://github.com/WingedGuardian/xeditlib) repo for XEditLib setup. AutoMod CLI is installed via the setup prompt.
+Install Windows tools into `tools/` inside the toolkit directory. See the [xeditlib](https://github.com/WingedGuardian/xeditlib) repo for XEditLib setup.
 
-## AutoMod CLI
+## XEditLib.dll API — Windows Only
 
-A .NET CLI at `tools/automod/` for NIF meshes, BSA archives, audio, MCM menus, and quick ESP record creation. Call via wrapper:
-```bash
-bash tools/automod-cli.sh <module> <command> [args] --json
-```
-
-**Always use `--json`** for parseable output. **Always use `--dry-run` first** for any write command.
-
-| Module | Key Commands | Use For |
-|--------|-------------|---------|
-| **nif** | `info`, `list-textures`, `replace-textures`, `fix-eyes`, `scale`, `verify` | Mesh inspection and editing |
-| **archive** | `info`, `list`, `extract`, `create`, `add-files`, `diff`, `merge` | BSA/BA2 full CRUD |
-| **audio** | `info`, `extract-fuz`, `create-fuz`, `wav-to-xwm` | Voice files (FUZ/XWM/WAV) |
-| **mcm** | `create`, `add-toggle`, `add-slider`, `validate` | SkyUI MCM menus |
-| **esp** | `add-weapon`, `add-spell`, `add-armor`, `add-npc`, `add-quest`, etc. | Quick one-liner record creation |
-
-### When to Use Which Tool
-- **AutoMod `esp`**: Quick one-liner additions. Best for simple records.
-- **Spriggit**: Complex multi-field editing via YAML. Best for detailed work.
-- **xeditlib**: Programmatic traversal and diffing. Best for analysis.
-- **AutoMod `nif`/`archive`/`audio`/`mcm`**: Only tools available for these operations.
-
-## XEditLib.dll API (Critical Notes)
+> **Requires Windows + MO2 VFS.** Do not use for tasks that Spriggit or esplugin can handle.
+> See `docs/container-vs-windows.md` for the decision guide.
 
 The DLL is Delphi-compiled. These quirks caused hours of debugging:
 
@@ -79,7 +232,7 @@ The DLL is Delphi-compiled. These quirks caused hours of debugging:
 
 5. **Game mode enum**: gmFNV=0, gmFO3=1, gmTES4=2, gmTES5=3, **gmSSE=4** (use this for Skyrim VR), gmFO4=5
 
-6. **Registry requirement**: XEditLib reads game path from `HKLM\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition` (the SSE key, not the VR key, because game mode 4 = SSE).
+6. **Registry requirement**: XEditLib reads game path from `HKLM\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition` (the SSE key, not the VR key, because game mode 4 = SSE). For a stock game setup this key must point to `C:\Games\Skyrim25\Game Root\` — not the original Steam path.
 
 7. **xelib.js wrapper**: See [xeditlib on GitHub](https://github.com/WingedGuardian/xeditlib) for the full wrapper with all 163 functions.
 
@@ -129,25 +282,6 @@ All ESP modifications via xelib scripts must follow this two-pass workflow:
 
 This prevents accidental ESP corruption. The hook system blocks direct ESP writes, but xelib operates through Bash and can write via `SaveFile()`.
 
-## Spriggit ESP Workflow (Preferred for Editing)
-
-For **creating or editing ESP records**, prefer Spriggit over xelib. Spriggit serializes ESP files to human-readable YAML that Claude can edit directly with its native Edit tool — no FFI, no scripting layer, and the YAML diffs cleanly in git.
-
-### Workflow
-1. **Serialize**: `spriggit serialize --InputPath "Data/MyMod.esp" --OutputPath "/tmp/mymod-yaml" --GameRelease SkyrimSE --PackageName Spriggit.Yaml --PackageVersion "0.40.0"`
-2. **Edit**: Read and modify the YAML files directly (Claude's Edit tool works natively on these)
-3. **Review**: User reviews the YAML changes (human-readable diffs)
-4. **Deserialize**: `spriggit deserialize --InputPath "/tmp/mymod-yaml" --OutputPath "Data/MyMod.esp"`
-
-### When to Use Which
-- **Spriggit**: Creating new ESPs, editing existing records, any task where you're modifying specific fields. Simpler, no setup beyond `dotnet tool install`.
-- **xeditlib**: Bulk inspection, programmatic traversal (e.g., "find all spells with mismatched casting types"), diffing two ESPs, analysis scripts. Better for read-heavy operations across many records.
-
-### Spriggit Notes
-- `spriggit-meta.json` is required in the YAML root for deserialization
-- ESP header version must be 1.7 for SSE/VR (not 1.0)
-- `--GameRelease` is only for serialize, NOT deserialize
-
 ## Safety Rules
 
 Hooks in `.claude/settings.json` enforce these automatically:
@@ -169,7 +303,7 @@ Hooks in `.claude/settings.json` enforce these automatically:
 ### General rules
 - **Always review changes before applying** -- this is a delicate install
 - Never modify ESP/ESM files directly -- use xelib programmatically or Spriggit
-- Vortex manages load order -- direct edits to loadorder.txt/plugins.txt may be overwritten by Vortex
+- MO2 manages load order -- direct edits to loadorder.txt/plugins.txt in the profile folder may be overwritten by MO2
 - User is knowledgeable about Skyrim modding and INI settings
 
 ### Safety improvement loop

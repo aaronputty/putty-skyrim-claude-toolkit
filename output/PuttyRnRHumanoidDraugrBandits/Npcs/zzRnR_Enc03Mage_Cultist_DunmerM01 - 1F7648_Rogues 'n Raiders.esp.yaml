@@ -1,0 +1,163 @@
+FormKey: 1F7648:Rogues 'n Raiders.esp
+IsCompressed: true
+MajorRecordFlagsRaw: 262144
+EditorID: zzRnR_Enc03Mage_Cultist_DunmerM01
+SkyrimMajorRecordFlags:
+- Compressed
+ObjectBounds:
+  First: -22, -14, 0
+  Second: 22, 14, 128
+Configuration:
+  Flags:
+  - Respawn
+  - AutoCalcStats
+  - LoopedScript
+  - LoopedAudio
+  MagickaOffset: 80
+  StaminaOffset: 40
+  Level:
+    MutagenObjectType: NpcLevel
+    Level: 12
+  SpeedMultiplier: 100
+  DispositionBase: 35
+  TemplateFlags:
+  - ModelAnimation
+  HealthOffset: 18
+Factions:
+- Faction: 026724:Skyrim.esm
+  Fluff: '0x000000'
+DeathItem: 863FDB:Rogues 'n Raiders.esp
+Voice: 01F1CD:Skyrim.esm
+Template: 000869:PuttyHumanoidDraugrTemplates.esp
+Race: 00098E:PuttyHumanoidDraugrTemplates.esp
+ActorEffect:
+- A1C9F6:Rogues 'n Raiders.esp
+- A2BD14:Rogues 'n Raiders.esp
+- DD4CF8:Rogues 'n Raiders.esp
+AttackRace: 00098E:PuttyHumanoidDraugrTemplates.esp
+Perks:
+- Perk: 34E63E:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 847431:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: A178E9:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: CEBDF2:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+Items:
+- Item:
+    Item: 6A7F4C:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 863FDE:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: A085D0:Rogues 'n Raiders.esp
+    Count: 1
+AIData:
+  Aggression: VeryAggressive
+  Confidence: Foolhardy
+  EnergyLevel: 50
+  Assistance: HelpsFriendsAndAllies
+Keywords:
+- 6F8FD6:Rogues 'n Raiders.esp
+- 6F8FD8:Rogues 'n Raiders.esp
+- 6F8FDB:Rogues 'n Raiders.esp
+- 6FE0ED:Rogues 'n Raiders.esp
+- 6FE0F4:Rogues 'n Raiders.esp
+Class: A034C6:Rogues 'n Raiders.esp
+Name:
+  TargetLanguage: English
+  Value: Fervent Cultist
+PlayerSkills:
+  SkillValues:
+  - Key: OneHanded
+    Value: 32
+  - Key: TwoHanded
+    Value: 21
+  - Key: Archery
+    Value: 21
+  - Key: Block
+    Value: 21
+  - Key: Smithing
+    Value: 15
+  - Key: HeavyArmor
+    Value: 21
+  - Key: LightArmor
+    Value: 26
+  - Key: Pickpocket
+    Value: 15
+  - Key: Lockpicking
+    Value: 15
+  - Key: Sneak
+    Value: 20
+  - Key: Alchemy
+    Value: 20
+  - Key: Speech
+    Value: 15
+  - Key: Alteration
+    Value: 20
+  - Key: Conjuration
+    Value: 32
+  - Key: Destruction
+    Value: 37
+  - Key: Illusion
+    Value: 20
+  - Key: Restoration
+    Value: 27
+  - Key: Enchanting
+    Value: 15
+  SkillOffsets:
+  - Key: OneHanded
+    Value: 0
+  - Key: TwoHanded
+    Value: 0
+  - Key: Archery
+    Value: 0
+  - Key: Block
+    Value: 0
+  - Key: Smithing
+    Value: 0
+  - Key: HeavyArmor
+    Value: 0
+  - Key: LightArmor
+    Value: 0
+  - Key: Pickpocket
+    Value: 0
+  - Key: Lockpicking
+    Value: 0
+  - Key: Sneak
+    Value: 0
+  - Key: Alchemy
+    Value: 0
+  - Key: Speech
+    Value: 0
+  - Key: Alteration
+    Value: 0
+  - Key: Conjuration
+    Value: 0
+  - Key: Destruction
+    Value: 0
+  - Key: Illusion
+    Value: 0
+  - Key: Restoration
+    Value: 0
+  - Key: Enchanting
+    Value: 0
+  Health: 167
+  Magicka: 174
+  Stamina: 112
+  GearedUpWeapons: 1
+CombatStyle: A085CA:Rogues 'n Raiders.esp
+NAM5: 255
+Height: 1
+Weight: 70
+SoundLevel: Normal
+DefaultOutfit: A085CF:Rogues 'n Raiders.esp
+DefaultPackageList: 021E81:Skyrim.esm
+MajorFlags:
+- '0x40000'

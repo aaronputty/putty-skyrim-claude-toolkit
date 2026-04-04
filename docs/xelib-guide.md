@@ -1,4 +1,25 @@
-# xelib Guide for Skyrim Modding
+# xelib Guide for Skyrim VR Modding
+
+> **Windows only.** xelib requires `XEditLib.dll` (a Windows DLL) and must be launched
+> through MO2 so the virtual filesystem is active. Do not use xelib for tasks the
+> container can handle — see `docs/container-vs-windows.md`.
+
+## Container alternatives
+
+Before reaching for xelib, check whether one of these fits:
+
+| Need | Container tool |
+|------|---------------|
+| Read / inspect records | `spriggit serialize` → YAML, then read with Python/Node |
+| Diff two ESPs | `spriggit serialize` both → `diff -r` |
+| Create records | Author Spriggit YAML → `spriggit deserialize` |
+| Validate plugin metadata | `esplugin` (Python) |
+
+Use xelib only when you need **load-order-aware record resolution** — i.e. "what does
+the winning override of this record look like given the full active load order?" — or
+when an operation must be executed inside MO2's VFS.
+
+---
 
 ## What is xelib?
 
@@ -19,7 +40,7 @@ This installs:
 
 ## Critical Setup: Registry Key
 
-XEditLib reads your game path from the Windows registry. You need the **SSE registry key** (even for VR):
+XEditLib reads your game path from the Windows registry. For Skyrim VR, you need the **SSE registry key** (not VR):
 
 ```
 HKLM\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition
@@ -32,6 +53,8 @@ reg add "HKLM\SOFTWARE\WOW6432Node\Bethesda Softworks\Skyrim Special Edition" /v
 ```
 
 > **Why SSE, not VR?** XEditLib uses game mode `gmSSE=4` for both SSE and VR. There is no VR-specific mode. The DLL looks up the game path using the SSE registry key regardless.
+
+> **MO2 stock game setup**: Point the registry key at your stock game root, not the original Steam install. For this setup: `C:\Games\Skyrim25\Game Root\`. XEditLib will then find plugins relative to that path. MO2's virtual filesystem is **not** active when running xelib scripts outside of MO2 — you will only see ESPs that physically exist in `C:\Games\Skyrim25\Game Root\Data\` or that you pass directly to `loadPlugins()` by absolute path.
 
 ## Delphi FFI Gotchas
 

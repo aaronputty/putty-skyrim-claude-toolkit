@@ -1,0 +1,79 @@
+{
+    "name": "Skyrim VR Modding Toolkit",
+
+    // Python 3.11 Debian base — matches .python-version pin
+    "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
+
+    "features": {
+        // Node.js 20 LTS for FOMOD generation, JSON validation, xelib (Windows-only, skipped in container)
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "20"
+        },
+        // .NET 9 for Spriggit (ESP <-> YAML/JSON serialization, cross-platform)
+        "ghcr.io/devcontainers/features/dotnet:2": {
+            "version": "9.0"
+        }
+    },
+
+    // Mount MO2 folders read-only so container scripts can read actual mod files
+    // without MO2's VFS needing to be active.
+    // Note: requires Docker Desktop "file sharing" to include C:/Games/
+    "mounts": [
+        {
+            "source": "C:/Games/Skyrim25/mods",
+            "target": "/skyrim/mods",
+            "type": "bind",
+            "readonly": true
+        },
+        {
+            "source": "C:/Games/Skyrim25/profiles",
+            "target": "/skyrim/profiles",
+            "type": "bind",
+            "readonly": true
+        },
+        {
+            "source": "C:/Games/Skyrim25/overwrite",
+            "target": "/skyrim/overwrite",
+            "type": "bind",
+            "readonly": true
+        },
+        {
+            "source": "C:/Games/Skyrim25/Game Root/Data",
+            "target": "/skyrim/game-data",
+            "type": "bind",
+            "readonly": true
+        }
+    ],
+
+    // Install all deps after container build
+    "postCreateCommand": "pip install -r requirements.txt && npm install && dotnet tool restore",
+
+    // Environment variables so Python/Node scripts can find the mounted paths
+    // without hardcoding them in source.
+    "remoteEnv": {
+        "SKYRIM_MODS_DIR": "/skyrim/mods",
+        "SKYRIM_PROFILES_DIR": "/skyrim/profiles",
+        "SKYRIM_OVERWRITE_DIR": "/skyrim/overwrite",
+        "SKYRIM_GAME_DATA_DIR": "/skyrim/game-data",
+        "MO2_ACTIVE_PROFILE": "Shattered Heresy - B0.1"
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.pylance",
+                "charliermarsh.ruff",
+                "ms-python.mypy-type-checker",
+                "ms-dotnettools.csdevkit"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "editor.formatOnSave": true,
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff"
+                }
+            }
+        }
+    }
+}

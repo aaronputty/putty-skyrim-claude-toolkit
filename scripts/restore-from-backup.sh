@@ -4,11 +4,11 @@
 #
 # Usage: bash scripts/restore-from-backup.sh [search-term]
 
-BACKUP_DIR="${GAME_DIR:-.}/.claude/backups"
+BACKUP_DIR="${TOOLKIT_DIR:-${GAME_DIR:-.}}/.claude/backups"
 
 if [ ! -d "$BACKUP_DIR" ]; then
     echo "No backup directory found at $BACKUP_DIR"
-    echo "Set GAME_DIR to your Skyrim install path, or run from the game directory."
+    echo "Set TOOLKIT_DIR to your toolkit folder path, or run from the toolkit directory."
     exit 1
 fi
 

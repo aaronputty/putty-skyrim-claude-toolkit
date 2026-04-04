@@ -1,0 +1,177 @@
+FormKey: 12CA5B:Rogues 'n Raiders.esp
+IsCompressed: true
+MajorRecordFlagsRaw: 262144
+EditorID: zzRnR_Enc04Bandit_BruiserBoss_NordF01
+SkyrimMajorRecordFlags:
+- Compressed
+ObjectBounds:
+  First: -22, -14, 0
+  Second: 22, 14, 128
+Configuration:
+  Flags:
+  - Female
+  - Respawn
+  - AutoCalcStats
+  - OppositeGenderAnims
+  - LoopedScript
+  - LoopedAudio
+  StaminaOffset: 60
+  Level:
+    MutagenObjectType: NpcLevel
+    Level: 21
+  SpeedMultiplier: 100
+  DispositionBase: 35
+  TemplateFlags:
+  - ModelAnimation
+  HealthOffset: 60
+Factions:
+- Faction: 01BCC0:Skyrim.esm
+  Fluff: '0x000000'
+DeathItem: 0C3C9B:Skyrim.esm
+Voice: 01F1CD:Skyrim.esm
+Template: 000897:PuttyHumanoidDraugrTemplates.esp
+Race: 00098E:PuttyHumanoidDraugrTemplates.esp
+AttackRace: 00098E:PuttyHumanoidDraugrTemplates.esp
+Perks:
+- Perk: 0D16EF:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 20F44E:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 5E5E82:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 5E5E85:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 6B7260:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 6B7261:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 796081:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 87D51C:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: CEBDF3:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: EDC1FE:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+Items:
+- Item:
+    Item: 15F57B:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 15F57C:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: EB39D1:Rogues 'n Raiders.esp
+    Count: 1
+AIData:
+  Aggression: VeryAggressive
+  Confidence: Foolhardy
+  EnergyLevel: 50
+  Assistance: HelpsFriendsAndAllies
+Keywords:
+- 6F8FD6:Rogues 'n Raiders.esp
+- 6F8FD7:Rogues 'n Raiders.esp
+- 6F8FD9:Rogues 'n Raiders.esp
+- 6FE0E1:Rogues 'n Raiders.esp
+Class: EA97B0:Rogues 'n Raiders.esp
+Name:
+  TargetLanguage: English
+  Value: Murderous Bandit Chief
+PlayerSkills:
+  SkillValues:
+  - Key: OneHanded
+    Value: 72
+  - Key: TwoHanded
+    Value: 78
+  - Key: Archery
+    Value: 37
+  - Key: Block
+    Value: 31
+  - Key: Smithing
+    Value: 20
+  - Key: HeavyArmor
+    Value: 26
+  - Key: LightArmor
+    Value: 31
+  - Key: Pickpocket
+    Value: 15
+  - Key: Lockpicking
+    Value: 15
+  - Key: Sneak
+    Value: 15
+  - Key: Alchemy
+    Value: 15
+  - Key: Speech
+    Value: 20
+  - Key: Alteration
+    Value: 15
+  - Key: Conjuration
+    Value: 15
+  - Key: Destruction
+    Value: 15
+  - Key: Illusion
+    Value: 15
+  - Key: Restoration
+    Value: 15
+  - Key: Enchanting
+    Value: 15
+  SkillOffsets:
+  - Key: OneHanded
+    Value: 0
+  - Key: TwoHanded
+    Value: 0
+  - Key: Archery
+    Value: 0
+  - Key: Block
+    Value: 0
+  - Key: Smithing
+    Value: 0
+  - Key: HeavyArmor
+    Value: 0
+  - Key: LightArmor
+    Value: 0
+  - Key: Pickpocket
+    Value: 0
+  - Key: Lockpicking
+    Value: 0
+  - Key: Sneak
+    Value: 0
+  - Key: Alchemy
+    Value: 0
+  - Key: Speech
+    Value: 0
+  - Key: Alteration
+    Value: 0
+  - Key: Conjuration
+    Value: 0
+  - Key: Destruction
+    Value: 0
+  - Key: Illusion
+    Value: 0
+  - Key: Restoration
+    Value: 0
+  - Key: Enchanting
+    Value: 0
+  Health: 290
+  Magicka: 50
+  Stamina: 230
+  GearedUpWeapons: 1
+CombatStyle: 122815:Rogues 'n Raiders.esp
+NAM5: 255
+Height: 1.04
+Weight: 100
+SoundLevel: Normal
+DefaultOutfit: EB39D0:Rogues 'n Raiders.esp
+DefaultPackageList: 021E81:Skyrim.esm
+MajorFlags:
+- '0x40000'

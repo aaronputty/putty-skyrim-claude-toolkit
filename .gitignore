@@ -7,6 +7,18 @@
 # Node modules
 node_modules/
 
+# Python
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# .NET
+.config/.store/
+
 # OS files
 Thumbs.db
 Desktop.ini

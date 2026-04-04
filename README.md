@@ -1,10 +1,8 @@
-# Skyrim Claude Code Modding Toolkit
+# Skyrim VR Claude Code Modding Toolkit
 
 An AI-assisted Skyrim modding environment for power users. Claude Code handles the mechanical work — porting mods across versions, inspecting and editing ESPs, debugging scripts, and building simple mods from scratch — with safety hooks, pre-loaded engine knowledge, and every tool pre-configured.
 
-Built from hundreds of hours of hands-on Skyrim VR mod development. **[Though this env was built with VR in mind, it can be just as powerful in any Skyrim version. Claude Code is the brain.]**
-
-> **This isn't just a guide -- it's a complete environment with all the setup prework already done.** You just need to install, and begin building the mod of your dreams! (Or ironing out all the bugs in your existing setup 😛)
+Built from hundreds of hours of hands-on Skyrim VR mod development.
 
 ---
 
@@ -12,7 +10,7 @@ Built from hundreds of hours of hands-on Skyrim VR mod development. **[Though th
 
 [Claude Code](https://claude.ai/code) is an AI assistant by Anthropic that runs directly on your computer. Unlike ChatGPT or regular Claude chat, it can **read your files, run commands, edit configs, execute scripts -- and do the mechanical work of modding for you** -- all with your permission. Think of it as having a modding expert sitting next to you who can actually touch your files.
 
-Most people who try to use Claude Code for modding spend days figuring out tool integrations, fighting weird Delphi DLL quirks, learning what Claude needs to know to be useful, and building safety guardrails so it doesn't break anything. This toolkit ships with all of that already solved. You get a working environment on day one.
+This toolkit teaches Claude Code everything it needs to know about Skyrim VR modding, and adds safety rails so it can't accidentally break your install.
 
 It's not perfect, and it will require some trial and error — especially for complex mods from scratch. But for the tedious parts of modding, it's significantly faster than doing it yourself.
 
@@ -48,8 +46,6 @@ The clearest example: **xeditlib**. XEditLib.dll is the engine inside SSEEdit/xE
 
 ## Setup (4 Steps)
 
-Setup is this short because the environment is already built. There's no configuration to figure out, no tools to manually wire up, no documentation to read before you start. Everything is pre-configured -- you just point it at your game folder and go.
-
 ### Step 1: Install Claude Code
 
 1. **Sign up** at [claude.ai](https://claude.ai) if you don't have an account
@@ -66,32 +62,27 @@ Setup is this short because the environment is already built. There's no configu
    npm install -g @anthropic-ai/claude-code
    ```
 
-### Step 2: Extract This Toolkit Into Your Skyrim Folder
+### Step 2: Extract This Toolkit Into a Folder
+
+The toolkit lives **independently** from your game. If you use MO2, do **not** extract into your game folder.
 
 1. Download this mod from Nexus (Manual Download)
-2. Find your Skyrim folder:
-   - Open **Steam** > **Library** > right-click **Skyrim VR** (or **Skyrim SE**) > **Properties** > **Installed Files** > **Browse**
-   - A folder opens -- this is your Skyrim folder
-3. **Extract the zip directly into that folder**
-   - Right-click the downloaded zip > Extract All > paste your Skyrim folder path > Extract
-   - The files blend in alongside your existing game files (nothing is overwritten)
+2. Choose a folder for the toolkit -- somewhere outside your game directory, e.g.:
+   - `C:\Users\YourName\Documents\SkyrimModding\Claude Code Setup\`
+3. **Extract the zip into that folder**
+   - Right-click the downloaded zip > Extract All > paste your chosen path > Extract
 
-### Step 3: Open Claude Code in Your Skyrim Folder
+> **Vortex users:** Extract directly into your Skyrim VR folder as before. The toolkit will work from there.
 
-**Desktop App:** Open Claude Code. Click the folder/path area and navigate to your Skyrim folder. Or type this (replace with YOUR path):
-```
-cd "C:\Steam\steamapps\common\SkyrimVR"
-```
+### Step 3: Open Claude Code in the Toolkit Folder
 
-**Command Line:** Open Windows Terminal and type:
+**Desktop App:** Open Claude Code. Click the folder/path area and navigate to the toolkit folder (where you extracted in Step 2).
+
+**Command Line:** Open Windows Terminal and type (replace with YOUR path):
 ```
-cd "C:\Steam\steamapps\common\SkyrimVR"
+cd "C:\Users\YourName\Documents\SkyrimModding\Claude Code Setup"
 claude
 ```
-
-> (Use `SkyrimVR`, `Skyrim Special Edition`, or whatever your folder is actually named.)
-
-> **Tip:** In the Steam browse window from Step 2, click the address bar and copy the path. Paste it after `cd `.
 
 ### Step 4: Paste This Prompt
 
@@ -114,7 +105,7 @@ Claude handles the rest. It will configure paths, install dependencies, set up t
 
 ## Using It
 
-From now on, whenever you open Claude Code in your Skyrim folder, the full environment loads automatically -- knowledge base, safety hooks, tool integrations, everything. No setup required each session. Just start talking.
+From now on, whenever you open Claude Code in your Skyrim VR folder, the toolkit loads automatically. Just start talking:
 
 This toolkit fits best as a **power user tool** — particularly strong for investigating, porting, and debugging existing mods, making targeted record edits, and scripting assistance. For simpler mods (spells, powers, item records, short scripts), Claude can build these from scratch. For complex systems, expect some iteration.
 
@@ -130,13 +121,12 @@ This toolkit fits best as a **power user tool** — particularly strong for inve
 - *"I'm getting a CTD when I equip this weapon in VR. Can you fix it?"*
 - *"NPC dialogue stopped showing up after I installed a mod. Help me debug it."*
 - *"Check my SkyrimVR.ini for settings that might cause problems"*
-- *"Decompile Data/Scripts/MyScript.pex and explain how it works"*
-- *"These two mods both touch the same magic effect -- which one wins?"*
+- *"NPC dialogue stopped showing up after I installed a mod. Help me debug it."*
 
-**Investigating and understanding mods:**
-- *"Inspect all the records in Data/MyMod.esp and explain what this mod actually does under the hood"*
-- *"What does the mod at nexusmods.com/skyrimspecialedition/mods/12345 do? Are there any known VR issues?"*
-- *"Compare the original and my patched version of this ESP and show me exactly what changed"*
+**Making changes:**
+- *"Set fUpdateBudgetMS to 2.0 in SkyrimVR.ini"*
+- *"Help me create an ESP that adds a new spell"*
+- *"Port this SSE Papyrus script to work in VR"*
 
 **Building new mods from scratch (simpler ones work best):**
 - *"Build me a power that lets me slow time for 10 seconds with a 60-second cooldown"*
@@ -157,25 +147,22 @@ If it involves Skyrim, Papyrus, ESPs, INI files, scripts, or mod files of any ki
 
 ## What's in the Knowledgebase?
 
-Other AI modding setups make you feed Claude information manually or re-explain the same quirks every session. This toolkit ships with a pre-loaded `KNOWLEDGEBASE.md` -- 600+ lines of documented knowledge that Claude reads automatically at the start of every session:
+The toolkit includes `KNOWLEDGEBASE.md` -- 600+ lines of documented knowledge:
 
 | Topic | What's Covered |
 |-------|---------------|
 | **Papyrus Scripting** | Script lifecycle, threading, RemoveSpell vs DispelSpell, Wait() reliability, magic effects, performance pitfalls |
-| **Version-Specific Differences** | SKSE versions, skeleton issues, camera, physics, UI, input, mod framework compatibility (with VR-specific sections) |
+| **VR vs SSE Differences** | SKSE versions, skeleton CTDs, camera, physics (60Hz vs 90Hz), UI, input, mod compatibility matrix |
 | **xEdit / ESP Editing** | VMAD fragility, plugin types (ESM/ESP/ESL), load order, BSA priority, navmesh, cleaning caveats |
 | **Engine Quirks** | Ability spells, vanilla bugs, SKSE plugin compatibility warnings |
-| **VR Controller Input** | SKSE Input API limitations in VR, VRIK API as the correct method, code examples (VR section) |
+| **VR Controllers** | Why SKSE Input API fails in VR, VRIK API as the correct method, code examples |
 | **Debugging** | Debug.Notification limitations, Debug.Trace patterns, concurrent script handling |
-| **Save File Analysis** | .ess format (LZ4 decompression), binary search for FormIDs/strings, plugin list extraction, orphaned script detection |
 
-All of this is pre-loaded and ready to go. And it grows over time -- Claude adds new discoveries as you work together, so the environment gets smarter the more you use it.
+This knowledge grows over time -- Claude adds new discoveries as you work together.
 
 ---
 
 ## Safety Features
-
-These aren't things you configure -- they're already wired in. Every session, before Claude touches anything, these run automatically:
 
 | Protection | What It Does |
 |-----------|-------------|
@@ -190,7 +177,13 @@ These aren't things you configure -- they're already wired in. Every session, be
 ## FAQ
 
 **Q: Does this work with flat Skyrim SE (non-VR)?**
-A: Yes! The knowledgebase covers both. VR-specific sections only apply to VR. Safety hooks and workflow work for either. Just tell Claude Code to adapt your enviornment to your specific Skyrim version. 
+A: Yes! The knowledgebase covers both. VR-specific sections only apply to VR. Safety hooks and workflow work for either.
+
+**Q: Does this work with MO2?**
+A: Yes. Extract the toolkit into a standalone folder (not inside the game directory). During setup, provide your MO2 base path, stock game root, and active profile name. Claude will look for INIs and load order in your MO2 profile folder, and mod files in your MO2 mods folder.
+
+**Q: I use Root Builder -- where does the toolkit look for files?**
+A: INIs and load order come from your MO2 profile. Individual mod files come from `<MO2>/mods/<mod-name>/`. Root Builder files (ENB, SKSE DLLs) live in `<MO2>/mods/<mod-name>/Root/`. xelib scripts need absolute paths to ESPs since MO2's virtual filesystem isn't active outside of MO2.
 
 **Q: Can Claude break my mods or save files?**
 A: The safety hooks prevent this. Claude can't edit ESP/ESM files directly, must ask permission for any edit, and backs everything up. But always keep your own backups too.
@@ -205,7 +198,7 @@ A: Download the new version from Nexus and extract over the old one. Your knowle
 
 ## Contributing
 
-Found a new Skyrim quirk? PRs welcome on [GitHub](https://github.com/WingedGuardian/skyrimvr-claude-toolkit) -- especially additions to `KNOWLEDGEBASE.md`.
+Found a new Skyrim VR quirk? PRs welcome on [GitHub](https://github.com/WingedGuardian/skyrimvr-claude-toolkit) -- especially additions to `KNOWLEDGEBASE.md`.
 
 ## License
 
@@ -215,6 +208,4 @@ MIT -- see [LICENSE](LICENSE).
 
 - [xeditlib](https://github.com/WingedGuardian/xeditlib) -- Node.js wrapper for XEditLib.dll
 - [zEdit](https://github.com/z-edit/zedit) -- Source of XEditLib.dll
-- [Spriggit](https://github.com/Mutagen-Modding/Spriggit) -- ESP to YAML serialization by Mutagen
-- [Spooky's AutoMod Toolkit](https://github.com/SpookyPirate/spookys-automod-toolkit) -- Inspiration for expanded CLI capabilities
 - [Claude Code](https://claude.ai/code) by Anthropic

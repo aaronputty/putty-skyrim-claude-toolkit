@@ -1,0 +1,168 @@
+FormKey: 26564D:Rogues 'n Raiders.esp
+IsCompressed: true
+MajorRecordFlagsRaw: 262144
+EditorID: zzRnR_Enc03Bandit_Brute_NordM02
+SkyrimMajorRecordFlags:
+- Compressed
+ObjectBounds:
+  First: -22, -14, 0
+  Second: 22, 14, 128
+Configuration:
+  Flags:
+  - Respawn
+  - AutoCalcStats
+  - LoopedScript
+  - LoopedAudio
+  StaminaOffset: 40
+  Level:
+    MutagenObjectType: NpcLevel
+    Level: 12
+  SpeedMultiplier: 85
+  DispositionBase: 35
+  TemplateFlags:
+  - ModelAnimation
+  HealthOffset: 30
+Factions:
+- Faction: 01BCC0:Skyrim.esm
+  Fluff: '0x000000'
+DeathItem: 0C3C9B:Skyrim.esm
+Voice: 01F1CD:Skyrim.esm
+Template: 000869:PuttyHumanoidDraugrTemplates.esp
+Race: 00098E:PuttyHumanoidDraugrTemplates.esp
+ActorEffect:
+- 1C34CC:Rogues 'n Raiders.esp
+AttackRace: 00098E:PuttyHumanoidDraugrTemplates.esp
+Perks:
+- Perk: 084275:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 084276:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 09D7AD:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 20F44E:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 20F44F:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: 78BE3F:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+- Perk: CEBDF3:Rogues 'n Raiders.esp
+  Rank: 1
+  Fluff: '0x000000'
+Items:
+- Item:
+    Item: 15F57A:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 15F57C:Rogues 'n Raiders.esp
+    Count: 1
+- Item:
+    Item: 49CBF2:Rogues 'n Raiders.esp
+    Count: 1
+AIData:
+  Aggression: VeryAggressive
+  Confidence: Foolhardy
+  EnergyLevel: 50
+  Assistance: HelpsFriendsAndAllies
+Keywords:
+- 6F8FD6:Rogues 'n Raiders.esp
+- 6F8FD7:Rogues 'n Raiders.esp
+- 6F8FD8:Rogues 'n Raiders.esp
+- 6FE0E2:Rogues 'n Raiders.esp
+Class: 186853:Rogues 'n Raiders.esp
+Name:
+  TargetLanguage: English
+  Value: Rugged Bandit Brute
+PlayerSkills:
+  SkillValues:
+  - Key: OneHanded
+    Value: 32
+  - Key: TwoHanded
+    Value: 48
+  - Key: Archery
+    Value: 27
+  - Key: Block
+    Value: 32
+  - Key: Smithing
+    Value: 20
+  - Key: HeavyArmor
+    Value: 38
+  - Key: LightArmor
+    Value: 26
+  - Key: Pickpocket
+    Value: 15
+  - Key: Lockpicking
+    Value: 15
+  - Key: Sneak
+    Value: 15
+  - Key: Alchemy
+    Value: 15
+  - Key: Speech
+    Value: 20
+  - Key: Alteration
+    Value: 15
+  - Key: Conjuration
+    Value: 15
+  - Key: Destruction
+    Value: 15
+  - Key: Illusion
+    Value: 15
+  - Key: Restoration
+    Value: 15
+  - Key: Enchanting
+    Value: 15
+  SkillOffsets:
+  - Key: OneHanded
+    Value: 0
+  - Key: TwoHanded
+    Value: 0
+  - Key: Archery
+    Value: 0
+  - Key: Block
+    Value: 0
+  - Key: Smithing
+    Value: 0
+  - Key: HeavyArmor
+    Value: 0
+  - Key: LightArmor
+    Value: 0
+  - Key: Pickpocket
+    Value: 0
+  - Key: Lockpicking
+    Value: 0
+  - Key: Sneak
+    Value: 0
+  - Key: Alchemy
+    Value: 0
+  - Key: Speech
+    Value: 0
+  - Key: Alteration
+    Value: 0
+  - Key: Conjuration
+    Value: 0
+  - Key: Destruction
+    Value: 0
+  - Key: Illusion
+    Value: 0
+  - Key: Restoration
+    Value: 0
+  - Key: Enchanting
+    Value: 0
+  Health: 179
+  Magicka: 50
+  Stamina: 156
+  GearedUpWeapons: 1
+CombatStyle: 08E486:Rogues 'n Raiders.esp
+NAM5: 255
+Height: 1.04
+Weight: 90
+SoundLevel: Normal
+DefaultOutfit: 48D8E4:Rogues 'n Raiders.esp
+DefaultPackageList: 021E81:Skyrim.esm
+MajorFlags:
+- '0x40000'

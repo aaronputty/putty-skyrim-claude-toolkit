@@ -1,9 +1,20 @@
+// ============================================================
+// WINDOWS ONLY -- requires XEditLib.dll and must run through MO2
+// ============================================================
+// For read-only ESP inspection in the devcontainer, use instead:
+//   python examples/inspect-esp.py /skyrim/mods/MyMod/MyMod.esp
+//
+// Use this script only when you need xelib's full record resolution
+// (e.g. resolving overrides across the entire load order).
+// ============================================================
+//
 // ESP Inspection Script -- READ-ONLY
 // Loads an ESP file and catalogs all records by type.
 // Usage: node inspect-esp.js "MyMod.esp"
 //
 // Requires: xeditlib (npm install xeditlib)
-// The ESP must be in your Skyrim Data/ folder.
+// The ESP must be in the stock game Data/ folder or passed by absolute path.
+// Run through MO2's executable list so the VFS is active.
 
 const xelib = require('xeditlib');
 

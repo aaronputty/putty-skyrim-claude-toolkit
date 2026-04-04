@@ -1,8 +1,20 @@
+// ============================================================
+// WINDOWS ONLY -- requires XEditLib.dll and must run through MO2
+// ============================================================
+// For diffing ESPs in the devcontainer, use Spriggit instead:
+//
+//   dotnet tool run spriggit serialize --InputPath Original.esp --OutputPath /tmp/orig --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim
+//   dotnet tool run spriggit serialize --InputPath Modified.esp --OutputPath /tmp/mod  --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim
+//   diff -r /tmp/orig /tmp/mod
+//
+// Use this script only when you need xelib's load-order-aware record resolution.
+// ============================================================
+//
 // ESP Diff Script -- Compare two ESP files and report differences
 // READ-ONLY -- does not modify anything
 //
 // Usage: node diff-esp.js "Original.esp" "Modified.esp"
-// Both ESPs must be in your Skyrim Data/ folder.
+// Pass absolute paths — MO2's VFS is not active outside MO2.
 //
 // Requires: xeditlib (npm install xeditlib)
 
@@ -13,7 +25,7 @@ const MODIFIED = process.argv[3];
 
 if (!ORIGINAL || !MODIFIED) {
     console.error('Usage: node diff-esp.js "Original.esp" "Modified.esp"');
-    console.error('Both files must be in your Skyrim Data/ folder.');
+    console.error('Pass absolute paths for MO2 setups (files live in mods/<name>/, not Data/).');
     process.exit(1);
 }
 

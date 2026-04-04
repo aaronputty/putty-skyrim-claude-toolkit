@@ -6,9 +6,9 @@ This is the extended version of the setup instructions. If the README was enough
 
 ## What You're Setting Up
 
-You're giving Claude Code (an AI assistant) a "brain upgrade" for Skyrim modding. After setup, you can talk to it in plain English and it will:
+You're giving Claude Code (an AI assistant) a "brain upgrade" for Skyrim VR modding. After setup, you can talk to it in plain English and it will:
 
-- Know 600+ Skyrim quirks, pitfalls, and workarounds (including VR-specific sections)
+- Know 600+ Skyrim VR quirks, pitfalls, and workarounds
 - Protect your game files from accidental damage
 - Decompile and analyze Papyrus scripts
 - Inspect ESP/ESM mod files
@@ -60,24 +60,16 @@ Claude Code is made by Anthropic (the company behind Claude AI). It's like ChatG
 
 ---
 
-## Step 2: Find Your Skyrim Folder
+## Step 2: Choose a Folder for the Toolkit
 
-1. Open **Steam**
-2. Click **Library** (at the top)
-3. Find **Skyrim VR** (or **Skyrim Special Edition**) in your game list
-4. Right-click it > **Properties**
-5. Click **Installed Files** (on the left side)
-6. Click **Browse...**
-7. A Windows Explorer window opens -- **this is your Skyrim folder**
-8. Click the **address bar** at the top of that window (where it shows the folder path)
-9. The path turns into selectable text -- **copy it** (Ctrl+C)
+The toolkit lives **independently** from your game folder. If you use MO2, keep it separate.
 
-Write this path down or keep the window open. You'll need it in the next steps.
+**MO2 users:** Pick any convenient location outside your game directory, for example:
+- `C:\Users\YourName\Documents\SkyrimModding\Claude Code Setup\`
 
-Common paths look like:
-- `C:\Steam\steamapps\common\SkyrimVR`
-- `D:\SteamLibrary\steamapps\common\SkyrimVR`
-- `C:\Program Files (x86)\Steam\steamapps\common\SkyrimVR`
+**Vortex users:** You can extract directly into your Skyrim VR folder as before (classic setup).
+
+Write your chosen path down -- you'll need it in the next step.
 
 ---
 
@@ -87,31 +79,31 @@ Common paths look like:
 2. Find the downloaded `.zip` file (usually in your Downloads folder)
 3. Right-click the zip file
 4. Click **Extract All...**
-5. In the "Extract to" box, **paste your Skyrim folder path** from Step 2
+5. In the "Extract to" box, paste your chosen toolkit folder path
 6. Click **Extract**
 
-The toolkit files blend in alongside your existing game files. Nothing is overwritten -- the toolkit only adds new files (CLAUDE.md, KNOWLEDGEBASE.md, setup.sh, and the .claude/ folder).
+The toolkit adds new files only (CLAUDE.md, KNOWLEDGEBASE.md, setup.sh, and the .claude/ folder). Nothing in your game or MO2 folders is touched at this stage.
 
 ---
 
-## Step 4: Open Claude Code in Your Skyrim Folder
+## Step 4: Open Claude Code in the Toolkit Folder
 
 ### Desktop App:
 
 1. Open Claude Code
 2. You'll see a text input at the bottom
-3. Type this (paste YOUR path from Step 2 between the quotes):
+3. Type this (paste YOUR toolkit path between the quotes):
    ```
-   cd "C:\Steam\steamapps\common\SkyrimVR"
+   cd "C:\Users\YourName\Documents\SkyrimModding\Claude Code Setup"
    ```
 4. Press Enter
 
 ### Command Line:
 
 1. Open Windows Terminal
-2. Type this (paste YOUR path):
+2. Type this (paste YOUR toolkit path):
    ```
-   cd "C:\Steam\steamapps\common\SkyrimVR"
+   cd "C:\Users\YourName\Documents\SkyrimModding\Claude Code Setup"
    ```
 3. Press Enter
 4. Type `claude` and press Enter
@@ -125,20 +117,21 @@ You should see Claude Code's interface -- a text area where you can type message
 Copy this entire block and paste it into Claude Code:
 
 ```
-I just installed the Skyrim Claude Code Modding Toolkit into this folder. Run "bash setup.sh" to set everything up. Install any missing prerequisites (jq, Node.js) for me. After setup, ask me which optional modding tools I'd like (xeditlib, Champollion, Caprica, Spriggit, AutoMod CLI) and install the ones I pick. Be sure to tailor the environment specifically to my Skyrim version and install (may or may not be VR). Explain everything in plain English and ask me any questions you may need to.
+I just installed the Skyrim VR Claude Code Modding Toolkit into this folder. Run "bash setup.sh" to set everything up. Install any missing prerequisites (jq, Node.js) for me. After setup, ask me which optional modding tools I'd like (xeditlib, Champollion, Caprica, Spriggit) and install the ones I pick. Explain everything in plain English -- I may be new to command-line tools.
 ```
 
 Press Enter. Claude will:
 
 1. **Run the setup script** -- configures all the safety hooks and paths
 2. **Install jq** if you don't have it (a small tool the hooks need)
-3. **Offer optional tools** and explain what each does:
+3. **Ask for your MO2 paths** (if you use MO2): base folder, stock game root, and active profile name
+4. **Offer optional tools** and explain what each does:
    - **xeditlib** -- lets Claude read/create ESP mod files with code
    - **Champollion** -- decompiles Papyrus scripts so you can read them
    - **Caprica** -- compiles Papyrus scripts you write
    - **Spriggit** -- converts ESP files to readable text
-4. **Verify everything works**
-5. **Show you what you can do**
+5. **Verify everything works**
+6. **Show you what you can do**
 
 Just answer its questions as they come up. If something fails, it will explain the problem and walk you through fixing it.
 
@@ -148,7 +141,7 @@ Just answer its questions as they come up. If something fails, it will explain t
 
 From now on, to use the toolkit:
 1. Open Claude Code
-2. Navigate to your Skyrim folder (`cd "your path"`)
+2. Navigate to your Skyrim VR folder (`cd "your path"`)
 3. Start talking
 
 The toolkit loads automatically every time. No re-setup needed.
@@ -166,8 +159,8 @@ The toolkit loads automatically every time. No re-setup needed.
 - Close and reopen Claude Code
 
 **"setup.sh not found"**
-- Make sure you extracted the toolkit into your Skyrim folder (Step 3)
-- Make sure Claude Code is running in that folder (Step 4)
+- Make sure you extracted the toolkit into your chosen toolkit folder (Step 3)
+- Make sure Claude Code is running in that folder (Step 4), not in your game folder
 
 **Something else?**
 - Just ask Claude: *"Something went wrong with my toolkit setup. Can you help me fix it?"*

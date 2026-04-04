@@ -1,3 +1,18 @@
+// ============================================================
+// WINDOWS ONLY -- requires XEditLib.dll and must run through MO2
+// ============================================================
+// For authoring ESP records in the devcontainer, use Spriggit instead:
+//
+//   1. Create a folder structure matching Spriggit's YAML schema for the record types you need.
+//   2. Run: dotnet tool run spriggit deserialize --InputPath ./MyMod-yaml --OutputPath ./MyMod.esp
+//
+// Spriggit's YAML schema is self-documenting -- serialize an existing ESP first
+// to see the structure, then author new records by following the same pattern.
+//
+// Use this script only when you need xelib's load-order-aware record operations
+// (e.g. copying records from masters, resolving overrides).
+// ============================================================
+//
 // Example: Create a new ESP file with xelib
 // Demonstrates the dry-run convention (read-only first, write only with --commit flag)
 //
