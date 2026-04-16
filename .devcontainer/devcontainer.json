@@ -1,19 +1,8 @@
 {
     "name": "Skyrim VR Modding Toolkit",
 
-    // Python 3.11 Debian base — matches .python-version pin
-    "image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
-
-    "features": {
-        // Node.js 20 LTS for FOMOD generation, JSON validation, xelib (Windows-only, skipped in container)
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "20"
-        },
-        // .NET 9 for Spriggit (ESP <-> YAML/JSON serialization, cross-platform)
-        "ghcr.io/devcontainers/features/dotnet:2": {
-            "version": "9.0"
-        }
-    },
+    // Dockerfile builds Python 3.11 + LLVM 17 (clang-cl/lld-link) + xmake + xwin SDK splat
+    "build": { "dockerfile": "Dockerfile" },
 
     // Mount MO2 folders read-only so container scripts can read actual mod files
     // without MO2's VFS needing to be active.
@@ -55,7 +44,11 @@
         "SKYRIM_PROFILES_DIR": "/skyrim/profiles",
         "SKYRIM_OVERWRITE_DIR": "/skyrim/overwrite",
         "SKYRIM_GAME_DATA_DIR": "/skyrim/game-data",
-        "MO2_ACTIVE_PROFILE": "{{ACTIVE_PROFILE_NAME}}"
+        "MO2_ACTIVE_PROFILE": "{{ACTIVE_PROFILE_NAME}}",
+        // xwin Windows SDK splat — consumed by clang-cl invocations and xmake toolchain
+        "XWIN_DIR": "/opt/xwin",
+        "XWIN_INCLUDE": "/opt/xwin/crt/include:/opt/xwin/sdk/include/ucrt:/opt/xwin/sdk/include/um:/opt/xwin/sdk/include/shared",
+        "XWIN_LIB_X64": "/opt/xwin/crt/lib/x86_64:/opt/xwin/sdk/lib/um/x86_64"
     },
 
     "customizations": {

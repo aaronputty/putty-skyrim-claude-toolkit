@@ -41,13 +41,14 @@ Default to the container for any task. Only cross to Windows/MO2 when the task g
 
 | Task | Where | Tool |
 |------|-------|------|
-| Validate plugin metadata (masters, FormIDs, overlap) | Container | `esplugin` (Python) |
+| Validate plugin metadata (masters, FormIDs, overlap) | Container | `spriggit serialize` → YAML |
 | Inspect ESP records | Container | `spriggit serialize` → YAML |
 | Diff two ESPs | Container | `spriggit serialize` both → `diff` |
 | Author new ESP records | Container | Spriggit YAML → `spriggit deserialize` |
 | Generate FOMOD XML | Container | Node.js (`fast-xml-parser`) |
 | Validate JSON schemas | Container | Node.js (`ajv`, `zod`) |
 | Unit test mod logic | Container | `pytest` |
+| Build SKSE plugin / Windows DLL | Container | xmake + clang-cl + lld-link + xwin |
 | Load-order-dependent ESP edits | Windows (MO2) | xelib |
 | Decompile Papyrus `.pex` → `.psc` | Windows | Champollion |
 | Compile Papyrus `.psc` → `.pex` | Windows | Caprica |
@@ -105,9 +106,15 @@ npm install
 
 ### Dev Container
 
-The `.devcontainer/devcontainer.json` sets up Python 3.11 + Node 20 + .NET 9. It
-bind-mounts the MO2 mods, profiles, overwrite, and game Data folders **read-only** so
-container scripts can read real mod files without MO2 needing to be active.
+The `.devcontainer/Dockerfile` builds:
+- Python 3.11 (base image)
+- LLVM 17 — `clang-cl`, `lld-link`, `llvm-lib`, `llvm-ar`
+- xmake — Lua-based build system with first-class clang-cl support
+- xwin — downloads Windows SDK + MSVC CRT headers/libs; splatted to `/opt/xwin` at image build time
+
+Node 20 and .NET 9 are added via devcontainer features after the image builds.
+
+The container bind-mounts the MO2 mods, profiles, overwrite, and game Data folders **read-only** so container scripts can read real mod files without MO2 needing to be active.
 
 Mounted paths inside the container:
 
@@ -118,7 +125,58 @@ Mounted paths inside the container:
 | `{{MO2_INSTANCE_PATH}}/overwrite` | `/skyrim/overwrite` | `SKYRIM_OVERWRITE_DIR` |
 | `{{MO2_INSTANCE_PATH}}/Game Root/Data` | `/skyrim/game-data` | `SKYRIM_GAME_DATA_DIR` |
 
-Open in VS Code and select "Reopen in Container" to use the containerized environment.
+Container environment variables:
+
+| Var | Value | Purpose |
+|-----|-------|---------|
+| `SKYRIM_MODS_DIR` | `/skyrim/mods` | MO2 mods mount |
+| `SKYRIM_PROFILES_DIR` | `/skyrim/profiles` | MO2 profiles mount |
+| `SKYRIM_OVERWRITE_DIR` | `/skyrim/overwrite` | MO2 overwrite mount |
+| `SKYRIM_GAME_DATA_DIR` | `/skyrim/game-data` | Game Data mount |
+| `DOTNET_ROOT` | `/usr/local/dotnet` | .NET 9 install root |
+| `XMAKE_ROOT` | `y` | Allow xmake to run as root without `--root` flag |
+| `XMAKE_BUILD_PATH` | `/root/.local/bin` | xmake install location |
+| `XWIN_ACCEPT_LICENSE` | `true` | Non-interactive xwin splat |
+| `XWIN_DIR` | `/opt/xwin` | xwin SDK splat root |
+| `XWIN_INCLUDE` | `/opt/xwin/crt/include:...` | Header search paths for clang-cl |
+| `XWIN_LIB_X64` | `/opt/xwin/crt/lib/x86_64:...` | Lib search paths for lld-link |
+
+xwin SDK layout (baked into image at `/opt/xwin`):
+
+```
+/opt/xwin/
+  crt/include/          # MSVC CRT headers (stddef.h, string.h, etc.)
+  crt/lib/x86_64/       # MSVC CRT .lib files
+  sdk/include/ucrt/     # Universal CRT headers
+  sdk/include/um/       # Win32 API headers (windows.h, d3d11.h, etc.)
+  sdk/include/shared/   # Shared headers (guiddef.h, etc.)
+  sdk/lib/um/x86_64/    # Win32 .lib files (kernel32.lib, etc.)
+```
+
+**Starting the container without VS Code** (preferred for CLI use):
+
+```bash
+# Install the devcontainer CLI once
+npm install -g @devcontainers/cli
+
+# Start (builds image on first run)
+devcontainer up --workspace-folder .
+
+# Run a command
+devcontainer exec --workspace-folder . xmake build
+
+# Interactive shell
+devcontainer exec --workspace-folder . bash
+```
+
+**xmake cross-compile toolchain**: `toolchains/clang-cl-xwin.lua` — include this from a mod's `xmake.lua`:
+
+```lua
+includes("../../toolchains/clang-cl-xwin.lua")
+set_toolchains("clang-cl-xwin")
+set_plat("windows")
+set_arch("x64")
+```
 
 ---
 
@@ -183,9 +241,11 @@ zod              — runtime schema validation
 
 | Tool | Purpose | Usage |
 |------|---------|-------|
-| **esplugin** (Python) | Validate plugin metadata: masters, FormID ranges, overlap, record count | `import esplugin` — see `examples/inspect-esp.py` |
+| **esplugin** (Python) | Validate plugin metadata: masters, FormID ranges, overlap, record count | No PyPI package exists — `examples/inspect-esp.py` handles missing import gracefully and falls back to Spriggit |
 | **Spriggit** (.NET) | ESP ↔ YAML/JSON round-trip — read, diff, and author records as text | `dotnet tool run spriggit serialize --InputPath <esp> --OutputPath <dir> --GameRelease SkyrimSE --PackageName Spriggit.Yaml.Skyrim` |
 | **Node.js** | FOMOD generation, JSON schema validation | `fast-xml-parser`, `ajv`, `zod` — see `examples/` |
+| **xmake + clang-cl + lld-link** | Cross-compile Windows DLLs (SKSE plugins, etc.) from Linux | `xmake build` — use `toolchains/clang-cl-xwin.lua` toolchain |
+| **xwin** | Windows SDK + MSVC CRT headers/libs (no Windows required) | Pre-splatted to `/opt/xwin`; env vars `XWIN_DIR`, `XWIN_INCLUDE`, `XWIN_LIB_X64` |
 
 Spriggit is installed as a .NET local tool via `dotnet tool restore` — no manual installation needed.
 

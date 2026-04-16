@@ -23,3 +23,8 @@ htmlcov/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# SKSE/C++ shenanigans
+.xmake/
+.xwin-cache/
+output/
