@@ -12,6 +12,18 @@ RUN rm -f /etc/apt/sources.list.d/yarn.list \
           /usr/share/keyrings/yarn.gpg \
     2>/dev/null || true
 
+# --- C++ library dependencies for development (fmt, zlib, nlohmann_json) ---
+# xmake's add_requires() detects system packages via pkg-config / CMake config files.
+# Installing here avoids xmake trying to download and compile from source at build time.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        cmake \
+        pkg-config \
+        libfmt-dev \
+        zlib1g-dev \
+        nlohmann-json3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # --- LLVM 17 (clang-cl + lld-link) ---
 # Bullseye's default apt only ships LLVM 13; use the official LLVM apt repo.
 RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key \
@@ -59,8 +71,8 @@ ENV PATH="$PATH:/usr/local/dotnet"
 ENV XMAKE_ROOT=y
 RUN curl -fsSL https://xmake.io/shget.text | bash 
 
-ENV XMAKE_BUILD_PATH=/root/.local/bin
-RUN $XMAKE_BUILD_PATH/xmake --root --version
+#ENV XMAKE_BUILD_PATH=/root/.local/bin
+#RUN $XMAKE_BUILD_PATH/xmake --root --version
 
 # --- xwin (pre-built musl binary — no Rust toolchain needed) ---
 ARG XWIN_VERSION=0.6.5
