@@ -311,6 +311,10 @@ Settings load in this order (later overrides earlier):
 
 `KNOWLEDGEBASE.md` (project root) is the master reference for all discovered quirks, gotchas, and cross-version differences. **Always consult it before making changes** to avoid repeating past mistakes.
 
+## Ongoing Work
+
+`docs/sentinel-mages-addons.md` — the "Putty Sentinel Mages" addon series. Records the addon structure pattern, all completed addons with their FormIDs and source armor records, the Skypatcher distribution format, and the next task (enchanted variants). Read this before touching any `PuttyElementalist*Addon.esp` or its Skypatcher config.
+
 **Standing instruction**: After every debugging session, mod investigation, or web research, extract any new facts (engine quirks, VR vs SSE differences, API gotchas, tool limitations) and add them to KNOWLEDGEBASE.md. We learn from everything we come into contact with.
 
 ## Top Gotchas (Always In Context)
